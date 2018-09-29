@@ -25,44 +25,36 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-'use strict';
-
-require('native-promise-only'); // a promise polyfill
-
-var assert = require('assert');
-var settle = require('../lib/promise-settle');
+import * as assert from "assert";
+import { settle } from "../";
 
 var sentinel = {};
 var other = {};
 
-describe('settle()', function () {
-
-  it('should settle empty arrays', function () {
-    return settle([]).then(function (settled) {
+describe("settle()", function() {
+  it("should settle empty arrays", function() {
+    return settle([]).then(settled => {
       assert.deepEqual(settled.length, 0);
     });
   });
 
-  it('should reject if promise for input array rejects', function () {
-    return settle(Promise.reject(sentinel)).then(
-      assert.fail,
-      function (reason) {
-        assert.equal(reason, sentinel);
-      }
-    );
-  });
-
-  it('should reject if the input is not an array', function() {
-    return settle().catch(function(err) {
-      assert.ok(err instanceof TypeError);
-      assert.ok(err.message === 'Expected an array of Promises');
+  it("should reject if promise for input array rejects", function() {
+    return settle(Promise.reject(sentinel)).then(assert.fail, reason => {
+      assert.equal(reason, sentinel);
     });
   });
 
-  it('should settle values', function () {
+  it("should reject if the input is not an array", function() {
+    return settle().catch(err => {
+      assert.ok(err instanceof TypeError);
+      assert.ok(err.message === "Expected an array of Promises");
+    });
+  });
+
+  it("should settle values", function() {
     var array = [0, 1, sentinel];
-    return settle(array).then(function (settled) {
-      settled.forEach(function (result, index) {
+    return settle(array).then(settled => {
+      settled.forEach((result, index) => {
         assert.equal(result.isFulfilled(), true);
         assert.equal(result.isRejected(), false);
         assert.deepEqual(result.value(), array[index]);
@@ -70,9 +62,9 @@ describe('settle()', function () {
     });
   });
 
-  it('should settle promises', function () {
+  it("should settle promises", function() {
     var array = [0, Promise.resolve(sentinel), Promise.reject(sentinel)];
-    return settle(array).then(function (settled) {
+    return settle(array).then(settled => {
       assert.equal(settled[0].isFulfilled(), true);
       assert.equal(settled[0].value(), 0);
 
@@ -86,46 +78,13 @@ describe('settle()', function () {
     });
   });
 
-  it('issue #4', function () {
-    return settle([aPromiseMethod()]).then(function(results) {
+  it("issue #4", function() {
+    return settle([aPromiseMethod()]).then(results => {
       assert.ok(results[0].isRejected());
     });
 
     function aPromiseMethod() {
-      return new Promise(function (resolve, reject) {
-        reject();
-      });
+      return new Promise((_resolve, reject) => reject());
     }
   });
-
-  //it('returned promise should fulfill once all inputs settle', function () {
-  //  var array, p1, p2, resolve, reject;
-  //
-  //  p1 = Promise.promise(function (r) {
-  //    resolve = function (a) {
-  //      r.fulfill(a);
-  //    };
-  //  });
-  //  p2 = Promise.promise(function (r) {
-  //    reject = function (a) {
-  //      r.reject(a);
-  //    };
-  //  });
-  //
-  //  array = [0, p1, p2];
-  //
-  //  setTimeout(function () {
-  //    resolve(sentinel);
-  //  }, 0);
-  //  setTimeout(function () {
-  //    reject(sentinel);
-  //  }, 0);
-  //
-  //  return settle(array).then(function (settled) {
-  //    testUtils.assertFulfilled(settled[0], 0);
-  //    testUtils.assertFulfilled(settled[1], sentinel);
-  //    testUtils.assertRejected(settled[2], sentinel);
-  //  });
-  //});
-
 });

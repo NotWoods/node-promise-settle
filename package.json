@@ -30,7 +30,6 @@
   "dependencies": {},
   "devDependencies": {
     "browserify": "^11.2.0",
-    "mocha": "^2.2.4",
-    "native-promise-only": "^0.8.1"
+    "mocha": "^2.2.4"
   }
 }
