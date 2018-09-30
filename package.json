@@ -1,15 +1,10 @@
 {
   "name": "promise-settle",
-  "version": "0.3.0",
-  "description": "settle([...]) returns a Promise that is fulfilled when all items in the array are either fulfilled or rejected",
-  "main": "index.js",
-  "engines": {
-    "node": ">= 0.10.0"
-  },
+  "version": "1.0.0",
+  "description": "settle() returns a Promise that is fulfilled when all items in the array are either fulfilled or rejected",
   "scripts": {
-    "test": "mocha -R spec test/",
-    "cover": "istanbul cover ./node_modules/mocha/bin/_mocha --report html -- -R spec",
-    "build": "node_modules/.bin/browserify -s Promise.settle index.js > build/promise-settle.js"
+    "test": "jest",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -19,7 +14,9 @@
     "es6",
     "promise",
     "settle",
-    "Promise.settle"
+    "Promise.settle",
+    "when",
+    "Promise.when"
   ],
   "author": "Patrick Gaubatz <patrick@gaubatz.at>",
   "license": "MIT",
@@ -29,7 +26,39 @@
   "homepage": "https://github.com/pgaubatz/node-promise-settle#readme",
   "dependencies": {},
   "devDependencies": {
-    "browserify": "^11.2.0",
-    "mocha": "^2.2.4"
+    "@types/jest": "^23.3.2",
+    "jest": "^23.6.0",
+    "ts-jest": "^23.10.2",
+    "typescript": "^3.1.1"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "index.js.map",
+    "promise-settle.js",
+    "promise-settle.d.ts",
+    "promise-settle.js.map",
+    "promise-when.js",
+    "promise-when.d.ts",
+    "promise-when.js.map"
+  ],
+  "jest": {
+    "coverageDirectory": "coverage",
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "tsconfig.json"
+      }
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx"
+    ],
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/__tests__/*.+(ts|tsx)"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    }
   }
 }

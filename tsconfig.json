@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "strict": true,
+    "sourceMap": true,
+    "declaration": true
+  },
+  "filesGlob": ["/*.ts"],
+  "exclude": ["node_modules"]
+}
