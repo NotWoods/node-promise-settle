@@ -1,15 +1,24 @@
 {
-  "files.exclude": {
-    "**/.git": true,
-    "**/.DS_Store": true,
-    "**/*.js": {
-      "when": "$(basename).ts"
+    "files.exclude": {
+        "**/.git": true,
+        "**/.DS_Store": true,
+        "**/*.js": {
+            "when": "$(basename).ts"
+        },
+        "**/*.js.map": {
+            "when": "$(basename)"
+        },
+        "**/*.d.ts": {
+            "when": "$(basename).ts"
+        }
     },
-    "**/*.js.map": {
-      "when": "$(basename)"
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/lib": true,
+        "**/coverge": true,
+        "package-lock.json": true
     },
-    "**/*.d.ts": {
-      "when": "$(basename).ts"
-    }
-  }
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "typescript.referencesCodeLens.enabled": true,
+    "editor.formatOnSave": true
 }

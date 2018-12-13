@@ -1,64 +1,58 @@
 {
-  "name": "promise-settle",
-  "version": "1.0.0",
-  "description": "settle() returns a Promise that is fulfilled when all items in the array are either fulfilled or rejected",
-  "scripts": {
-    "test": "jest",
-    "build": "tsc"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/pgaubatz/node-promise-settle.git"
-  },
-  "keywords": [
-    "es6",
-    "promise",
-    "settle",
-    "Promise.settle",
-    "when",
-    "Promise.when"
-  ],
-  "author": "Patrick Gaubatz <patrick@gaubatz.at>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/pgaubatz/node-promise-settle/issues"
-  },
-  "homepage": "https://github.com/pgaubatz/node-promise-settle#readme",
-  "dependencies": {},
-  "devDependencies": {
-    "@types/jest": "^23.3.10",
-    "jest": "^23.6.0",
-    "ts-jest": "^23.10.2",
-    "typescript": "^3.2.2"
-  },
-  "files": [
-    "index.js",
-    "index.d.ts",
-    "index.js.map",
-    "promise-settle.js",
-    "promise-settle.d.ts",
-    "promise-settle.js.map",
-    "promise-when.js",
-    "promise-when.d.ts",
-    "promise-when.js.map"
-  ],
-  "jest": {
-    "coverageDirectory": "coverage",
-    "globals": {
-      "ts-jest": {
-        "tsConfigFile": "tsconfig.json"
-      }
+    "name": "promise-settle",
+    "version": "1.0.0",
+    "description": "settle() returns a Promise that is fulfilled when all items in the array are either fulfilled or rejected",
+    "license": "MIT",
+    "author": "Patrick Gaubatz <patrick@gaubatz.at>",
+    "repository": "pgaubatz/node-promise-settle",
+    "bugs": "https://github.com/pgaubatz/node-promise-settle/issues",
+    "homepage": "https://github.com/pgaubatz/node-promise-settle#readme",
+    "scripts": {
+        "test": "jest",
+        "build": "tsc",
+        "lint": "prettier --parser typescript \"**/*.ts\" --write",
+        "lint:check": "tsc --noEmit && prettier --parser typescript \"**/*.ts\" --list-different"
     },
-    "moduleFileExtensions": [
-      "ts",
-      "tsx"
+    "keywords": [
+        "es6",
+        "promise",
+        "settle",
+        "Promise.settle",
+        "when",
+        "Promise.when"
     ],
-    "testEnvironment": "node",
-    "testMatch": [
-      "**/__tests__/*.+(ts|tsx)"
+    "dependencies": {},
+    "devDependencies": {
+        "@types/jest": "^23.3.10",
+        "husky": "^1.2.0",
+        "jest": "^23.6.0",
+        "prettier": "^1.15.3",
+        "ts-jest": "^23.10.2",
+        "typescript": "^3.2.2"
+    },
+    "files": [
+        "index.js",
+        "index.d.ts",
+        "index.js.map",
+        "promise-settle.js",
+        "promise-settle.d.ts",
+        "promise-settle.js.map",
+        "promise-when.js",
+        "promise-when.d.ts",
+        "promise-when.js.map"
     ],
-    "transform": {
-      "^.+\\.(ts|tsx)$": "ts-jest"
+    "jest": {
+        "preset": "ts-jest",
+        "coverageDirectory": "coverage"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "npm run lint"
+        }
+    },
+    "prettier": {
+        "singleQuote": true,
+        "trailingComma": "all",
+        "proseWrap": "always"
     }
-  }
 }

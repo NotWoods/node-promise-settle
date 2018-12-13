@@ -1,17 +1,16 @@
-// @ts-check
-import { settle, Settled } from "./promise-settle";
+import { settle, Settled } from './promise-settle';
 
 /**
  * Only thrown by `when`.
  */
 export class WhenError extends Error {
-  public errors: any[];
+    public errors: any[];
 
-  constructor(settled: Array<Settled<any>>) {
-    super("All promises rejected");
-    /** List of errors from rejected promises. */
-    this.errors = settled.map(promise => promise.reason());
-  }
+    constructor(settled: Array<Settled<any>>) {
+        super('All promises rejected');
+        /** List of errors from rejected promises. */
+        this.errors = settled.map(promise => promise.reason());
+    }
 }
 
 /**
@@ -23,15 +22,15 @@ export class WhenError extends Error {
  * @param promises Promises to handle.
  */
 export function when<T>(promises: Iterable<Promise<T> | T>): Promise<T[]> {
-  return settle(promises).then(settled => {
-    const result = settled
-      .filter(promise => promise.isFulfilled)
-      .map(promise => promise.value());
+    return settle(promises).then(settled => {
+        const result = settled
+            .filter(promise => promise.isFulfilled)
+            .map(promise => promise.value());
 
-    if (result.length > 0) {
-      return result;
-    } else {
-      throw new WhenError(settled);
-    }
-  });
+        if (result.length > 0) {
+            return result;
+        } else {
+            throw new WhenError(settled);
+        }
+    });
 }

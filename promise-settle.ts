@@ -1,12 +1,10 @@
-// @ts-check
-
 export interface Settled<T> {
-  /** True if the promise fulfilled, false if rejected. */
-  isFulfilled: boolean;
-  /** Returns value if fulfilled, otherwise throws. */
-  value(): T;
-  /** Returns error if rejected, otherwise throws. */
-  reason(): any;
+    /** True if the promise fulfilled, false if rejected. */
+    isFulfilled: boolean;
+    /** Returns value if fulfilled, otherwise throws. */
+    value(): T;
+    /** Returns error if rejected, otherwise throws. */
+    reason(): any;
 }
 
 /**
@@ -18,54 +16,54 @@ export interface Settled<T> {
  * @see {@link https://github.com/pgaubatz/node-promise-settle/blob/master/lib/promise-settle.js}
  */
 export function settle<T>(
-  promises: Iterable<Promise<T> | T>
+    promises: Iterable<Promise<T> | T>,
 ): Promise<Array<Settled<T>>> {
-  return Promise.resolve(promises).then(_settle);
+    return Promise.resolve(promises).then(_settle);
 }
 
 /**
  * Inner function for `settle`.
  */
 function _settle<T>(
-  promises: Iterable<Promise<T> | T>
+    promises: Iterable<Promise<T> | T>,
 ): Promise<Array<Settled<T>>> {
-  if (!_isIterable(promises)) {
-    throw new TypeError("Expected an iterable of Promises");
-  }
+    if (!_isIterable(promises)) {
+        throw new TypeError('Expected an iterable of Promises');
+    }
 
-  return Promise.all(Array.from(promises, _settlePromise));
+    return Promise.all(Array.from(promises, _settlePromise));
 }
 
 /**
  * Handle single promise for `settle`.
  */
 function _settlePromise<T>(promise: Promise<T> | T): Promise<Settled<T>> {
-  return Promise.resolve(promise).then(_promiseResolved, _promiseRejected);
+    return Promise.resolve(promise).then(_promiseResolved, _promiseRejected);
 }
 function _promiseResolved<T>(result: T): Settled<T> {
-  return {
-    isFulfilled: true,
-    value: () => result,
-    reason: _isFulfilled
-  };
+    return {
+        isFulfilled: true,
+        value: () => result,
+        reason: _isFulfilled,
+    };
 }
 function _promiseRejected(err: any): Settled<never> {
-  return {
-    isFulfilled: false,
-    value: _isRejected,
-    reason: () => err
-  };
+    return {
+        isFulfilled: false,
+        value: _isRejected,
+        reason: () => err,
+    };
 }
 
 /** Returns true if `obj` is Iterable. */
 function _isIterable(obj: any): obj is Iterable<any> {
-  if (obj == null) return false;
-  return typeof obj[Symbol.iterator] === "function";
+    if (obj == null) return false;
+    return typeof obj[Symbol.iterator] === 'function';
 }
 
 function _isRejected(): never {
-  throw new Error("Promise is rejected");
+    throw new Error('Promise is rejected');
 }
 function _isFulfilled(): never {
-  throw new Error("Promise is fulfilled");
+    throw new Error('Promise is fulfilled');
 }
